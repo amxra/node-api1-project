@@ -6,6 +6,25 @@ app.use(express.json())
 
 const db = require('./data/db')
 
+
+app.post('/api/users', (req, res) =>{
+    const {name, bio} = req.body;
+
+    db.insert(req.body)
+    .then(user => {
+        res.status(201).json({success: true, user})
+    })
+    .catch( error => {
+        res.status(500).json({
+            success: false,
+            error
+        })
+    })
+})
+
+
+
+
 function handleDefaultRequest(req, res) {
     res.json('hello world')
 }
