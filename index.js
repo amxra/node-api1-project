@@ -10,7 +10,7 @@ const db = require('./data/db')
 app.post('/api/users', (req, res) =>{
     const {name, bio} = req.body;
 
-    db.insert(req.body)
+    db.insert(name, bio)
     .then(user => {
         res.status(201).json({success: true, user})
     })
