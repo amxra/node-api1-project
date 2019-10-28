@@ -86,6 +86,32 @@ app.delete('/api/users/:id', (req, res) => {
     })
 })
 
+
+app.put('/api/users/:id	', (req, res) => {
+    const { id } = re.params;
+    const changes = req.body;
+
+    db.update(id, changes)
+    .then(updated => {
+        if(updated){
+            res.status(200).json({success: true, updated})
+        }
+
+        else{
+            res.status(400).json({
+                success: false,
+                message: 'Cannot find user'
+            })
+        }
+    })
+    .catch(error => {
+        res.status(500).json({
+            success: false,
+            error
+        })
+    })
+})
+
 function handleDefaultRequest(req, res) {
     res.json('hello world')
 }
