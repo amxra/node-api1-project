@@ -12,21 +12,39 @@ app.use(express.json())
 //endpoints
 
 app.post('/api/users', (req, res) => {
-    const user = {
-        name: req.body.name,
-        bio: req.body.bio,
-        created_at: req.body.created_at,
-        updated_at: req.body.updated_at
+    const { name, bio } = req.body;
+  
+    if (!name || !bio) {
+      res
+        .status(400)
+        .json({ errorMessage: 'Enter name and bio' });
+    } 
+    else {
+        db.insert(req.body)
+        .then(user => {
+          res.status(201).json(user);
+        })
+        .catch(() => {
+          res.status(500).json({
+            errorMessage:
+              'Error',
+          });
+        });
     }
+  });
 
-    db.insert(user)
-    .then(data => {
-        console.log(data)
-    })
-    .catch(error => {
-        console.log(error)
-    })
-})
+  app.get('/api/users', (req, res) => {
+      db.find()
+      .then(users => {
+          res.status(200).json(users)
+      })
+      .catch(error =>{
+          res.status(500).json({
+              success: false,
+              err
+          })
+      })
+  })
 
 
 app.listen(process.env.PORT || 3000, () =>{
