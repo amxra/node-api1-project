@@ -88,7 +88,7 @@ app.delete('/api/users/:id', (req, res) => {
 
 
 app.put('/api/users/:id	', (req, res) => {
-    const { id } = re.params;
+    const { id } = req.params;
     const changes = req.body;
 
     db.update(id, changes)
