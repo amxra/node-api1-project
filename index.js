@@ -62,6 +62,29 @@ app.get('/api/users/:id', (req, res) => {
     })
 })
 
+app.delete('/api/users/:id', (req, res) => {
+    const { id } = req.params;
+
+    db.remove(id)
+    .then(deleted => {
+        if(deleted){
+            res.status(204).end()
+        }
+        else{
+            res.status(404).json({
+                success: false,
+                message: 'Cannot find user'
+            })
+        }
+    })
+
+    .catch(error => {
+        res.status(500).json({
+            success: false, 
+            error
+        })
+    })
+})
 
 function handleDefaultRequest(req, res) {
     res.json('hello world')
