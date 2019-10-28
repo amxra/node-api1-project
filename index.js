@@ -37,6 +37,30 @@ app.get('/api/users', (req, res)=> {
 })
 
 
+app.get('/api/users/:id', (req, res) => {
+    db.findById(req.params.id)
+    .then(user => {
+        if(user){
+            res.status(200).json({
+                success: true,
+                user
+            })
+        }
+
+        else{
+            res.status.json(404). json({
+                success: false, 
+                message: 'Cannot find user'
+            })
+        }
+    })
+    .catch(error => {
+        res.status(500).json({
+            success: false,
+            error
+        })
+    })
+})
 
 
 function handleDefaultRequest(req, res) {
