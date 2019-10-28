@@ -23,6 +23,20 @@ app.post('/api/users', (req, res) =>{
 })
 
 
+app.get('/api/users', (req, res)=> {
+    db.find()
+    .then(user => {
+        res.status(200).json(user)
+    })
+    .catch(error =>{
+        res.status(500).json({
+            success: false,
+            error
+        })
+    })
+})
+
+
 
 
 function handleDefaultRequest(req, res) {
